@@ -2,11 +2,12 @@
 This File is for the desing of the game
 """
 import tkinter as tk
+from PIL import ImageTk, Image
 
 root = tk.Tk()
 root.title("Hangman")
-root.geometry("1200x700")
-root.geometry("300x400")
+root.geometry("700x700")
+root.configure(bg="#41423d")
 
 canvas = tk.Canvas(root, width=300, height=300, bg="black")
 canvas.grid(row=0, column=0)
@@ -19,8 +20,6 @@ for i in range(1, 14):
     img = img.resize((300, 300))
     photo = ImageTk.PhotoImage(img)
     hangman.append(photo)
-
-
 
 image_ids = []
 count = 0
@@ -50,16 +49,20 @@ backward_btn.grid(row=1, column=0)
 forward_btn.grid(row=1, column=1)
 
 
+# ========== KEYBOARD FUNCTIONS ==========
+
+word = 'Hello' #bis es eine word Variable gibt!!!!! Dann löschen
+
 def key_board():
     keyboard_frame = tk.Frame(root)
-    keyboard_frame.pack(pady=(20, 90), padx=10, side='bottom')
+    keyboard_frame.grid(row=2, column=0, pady=(20, 90), padx=10, sticky="s")
+
     my_buttons = {}
     keyboard_layout = [['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
         ['y', 'x', 'c', 'v', 'b', 'n', 'm']
     ]
 
-    word = 'Hello' #bis es eine word Variable gibt!!!!! Dann löschen
 
     def key_board_press(key):
         current_button = my_buttons[key]
@@ -71,17 +74,23 @@ def key_board():
         else:
             current_button.config(highlightbackground='red')
 
-
-
     for row_index, row in enumerate(keyboard_layout):
         row_frame = tk.Frame(keyboard_frame)
-        row_frame.pack()
+        row_frame.grid(row=row_index, column=0)
+
         for col_index, key in enumerate(row):
-            button = tk.Button(row_frame, text=key, width=7, height=3, command=lambda k=key: key_board_press(k))
+            button = tk.Button(
+                row_frame,
+                text=key,
+                width=7,
+                height=3,
+                command=lambda k=key: key_board_press(k)
+            )
             root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
-            button.pack(side='left', pady=1, padx=1)
+            button.grid(row=0, column=col_index, pady=1, padx=1)
             my_buttons[key] = button
 
 
 key_board()
 root.mainloop()
+
