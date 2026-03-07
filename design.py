@@ -1,5 +1,5 @@
 """
-This File is for the desing of the game
+This File is for the designing of the game
 """
 import tkinter as tk
 from PIL import ImageTk, Image
@@ -14,44 +14,46 @@ canvas.grid(row=0, column=0)
 
 # ========== LOAD PICTURES ==========
 
-hangman = [] # wird gebraucht um das PNG zu
-for i in range(1, 14):
-    img = Image.open(f"hangman_images/stage{i}.png")
-    img = img.resize((300, 300))
-    photo = ImageTk.PhotoImage(img)
-    hangman.append(photo)
+def draw_hangman():
 
-image_ids = []
-count = 0
+    hangman = [] # wird gebraucht um das PNG zu
+    for i in range(1, 14):
+        img = Image.open(f"hangman_images/stage{i}.png")
+        img = img.resize((300, 300))
+        photo = ImageTk.PhotoImage(img)
+        hangman.append(photo)
 
-# ========== FUNCTIONS ==========
+    image_ids = []
+    count = 0
 
-def draw_stage():
-    global count
-    created_image = canvas.create_image(150, 150, image=hangman[count])
-    image_ids.append(created_image)
-    count += 1
+    # ========== FUNCTIONS ==========
 
-def remove_stage():
-    global count
-    last_image = image_ids.pop()
-    canvas.delete(last_image)
-    count -= 1
+    def draw_stage():
+        nonlocal count
+        created_image = canvas.create_image(150, 150, image=hangman[count])
+        image_ids.append(created_image)
+        count += 1
 
-# ========== Buttons ==========
+    def remove_stage():
+        nonlocal count
+        last_image = image_ids.pop()
+        canvas.delete(last_image)
+        count -= 1
 
-btn_frame = tk.Frame(root)
-btn_frame.grid(row=1, column=0)
+    # ========== Buttons ==========
 
-backward_btn = tk.Button(btn_frame, text="Back", command=remove_stage) # removes hangman stage
-forward_btn = tk.Button(btn_frame, text="Forward", command=draw_stage) # adds hangman stage
-backward_btn.grid(row=1, column=0)
-forward_btn.grid(row=1, column=1)
+    btn_frame = tk.Frame(root)
+    btn_frame.grid(row=1, column=0)
+
+    backward_btn = tk.Button(btn_frame, text="Back", command=remove_stage) # removes hangman stage
+    forward_btn = tk.Button(btn_frame, text="Forward", command=draw_stage) # adds hangman stage
+    backward_btn.grid(row=1, column=0)
+    forward_btn.grid(row=1, column=1)
 
 
 # ========== KEYBOARD FUNCTIONS ==========
 
-word = 'Hello' #bis es eine word Variable gibt!!!!! Dann löschen
+
 
 def key_board():
     keyboard_frame = tk.Frame(root)
@@ -62,6 +64,7 @@ def key_board():
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
         ['y', 'x', 'c', 'v', 'b', 'n', 'm']
     ]
+    word = 'Hello'  # bis es eine word Variable gibt!!!!! Dann löschen
 
 
     def key_board_press(key):
@@ -90,7 +93,6 @@ def key_board():
             button.grid(row=0, column=col_index, pady=1, padx=1)
             my_buttons[key] = button
 
-
+draw_hangman()
 key_board()
 root.mainloop()
-
