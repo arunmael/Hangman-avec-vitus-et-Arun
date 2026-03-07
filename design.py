@@ -1,11 +1,11 @@
 """
-This File is for the designing of the game
+This File is for the desing of the game
 """
 import tkinter as tk
-from PIL import Image, ImageTk
 
 root = tk.Tk()
 root.title("Hangman")
+root.geometry("1200x700")
 root.geometry("300x400")
 
 canvas = tk.Canvas(root, width=300, height=300, bg="black")
@@ -50,28 +50,38 @@ backward_btn.grid(row=1, column=0)
 forward_btn.grid(row=1, column=1)
 
 
-
-def key_board_normal():
-    tastatur = tk.Frame(root, bg="#2b2b2b")
-    tastatur.pack(pady=20)
-
-    zeilen = [
-        ['Q', 'W', 'E', 'R', 'T', 'Z', 'U', 'I', 'O', 'P'],
-        ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-        ['Y', 'X', 'C', 'V', 'B', 'N', 'M']
+def key_board():
+    keyboard_frame = tk.Frame(root)
+    keyboard_frame.pack(pady=(20, 90), padx=10, side='bottom')
+    my_buttons = {}
+    keyboard_layout = [['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
+        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
+        ['y', 'x', 'c', 'v', 'b', 'n', 'm']
     ]
 
-def wrong_letter():
-    pass
+    word = 'Hello' #bis es eine word Variable gibt!!!!! Dann löschen
+
+    def key_board_press(key):
+        current_button = my_buttons[key]
+        word_lowercase = word.lower()
+
+        word_split = list(word_lowercase)
+        if key in word_split:
+            current_button.config(highlightbackground='green')
+        else:
+            current_button.config(highlightbackground='red')
 
 
-def false_postionn():
-    pass
+
+    for row_index, row in enumerate(keyboard_layout):
+        row_frame = tk.Frame(keyboard_frame)
+        row_frame.pack()
+        for col_index, key in enumerate(row):
+            button = tk.Button(row_frame, text=key, width=7, height=3, command=lambda k=key: key_board_press(k))
+            root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
+            button.pack(side='left', pady=1, padx=1)
+            my_buttons[key] = button
 
 
-def right_letter():
-    pass
-
-
-
+key_board()
 root.mainloop()
