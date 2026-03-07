@@ -1,8 +1,8 @@
 """
-This File is for the designing of the game
+This File is for the desing of the game
 """
 import tkinter as tk
-from PIL import ImageTk, Image
+import logic
 
 root = tk.Tk()
 root.title("Hangman")
@@ -55,18 +55,17 @@ def draw_hangman():
 
 
 
-def key_board():
+def key_board(word, root):
     keyboard_frame = tk.Frame(root)
-    keyboard_frame.grid(row=2, column=0, pady=(20, 90), padx=10, sticky="s")
-
+    keyboard_frame.pack(pady=(20, 90), padx=10, side='bottom')
     my_buttons = {}
     keyboard_layout = [['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
         ['y', 'x', 'c', 'v', 'b', 'n', 'm']
     ]
-    word = 'Hello'  # bis es eine word Variable gibt!!!!! Dann löschen
 
 
+    
     def key_board_press(key):
         current_button = my_buttons[key]
         word_lowercase = word.lower()
@@ -77,22 +76,14 @@ def key_board():
         else:
             current_button.config(highlightbackground='red')
 
+
+
     for row_index, row in enumerate(keyboard_layout):
         row_frame = tk.Frame(keyboard_frame)
-        row_frame.grid(row=row_index, column=0)
-
+        row_frame.pack()
         for col_index, key in enumerate(row):
-            button = tk.Button(
-                row_frame,
-                text=key,
-                width=7,
-                height=3,
-                command=lambda k=key: key_board_press(k)
-            )
+            button = tk.Button(row_frame, text=key, width=7, height=3, command=lambda k=key: key_board_press(k))
             root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
-            button.grid(row=0, column=col_index, pady=1, padx=1)
+            button.pack(side='left', pady=1, padx=1)
             my_buttons[key] = button
 
-draw_hangman()
-key_board()
-root.mainloop()
