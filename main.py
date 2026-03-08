@@ -10,7 +10,9 @@ def main():
 
 
     word = logic.random_word()
+    celb = logic.celebrities_word()
     print(f"Gesuchtes Wort: {word}")
+    print(f"Gesuchte Wort: {celb}")
     start_screen.start_screen(root)
     root.mainloop()
 
