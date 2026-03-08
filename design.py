@@ -2,9 +2,7 @@
 This File is for the designing of the game
 """
 import tkinter as tk
-
 from PIL import Image, ImageTk
-import logic
 
 
 # ========== LOAD PICTURES ==========
@@ -47,38 +45,30 @@ def draw_hangman(root):
     forward_btn.grid(row=1, column=1)
 
 
-
-def key_board(word, root):
+def key_board(root, random_word):
     keyboard_frame = tk.Frame(root)
-    keyboard_frame.grid(row=2, column=0, pady=(20, 90), padx=10, sticky="s")
+    keyboard_frame.pack(pady=(20, 90), padx=10, side='bottom')
     my_buttons = {}
     keyboard_layout = [['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
                        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
                        ['y', 'x', 'c', 'v', 'b', 'n', 'm']
                        ]
 
-
     def key_board_press(key):
         current_button = my_buttons[key]
-        word_lowercase = word.lower()
+        word_lowercase = random_word.lower()
 
         word_split = list(word_lowercase)
-        logic.check_for_input(key, word)
-        if key in logic.correct_letters:
-            current_button.config(state =tk.DISABLED, bg='#3fde3a', fg='white', disabledforeground="white")
+        if key in word_split:
+            current_button.config(highlightbackground='green')
         else:
-            current_button.config(state=tk.DISABLED, bg='#f51616', fg='white', disabledforeground="white")
-
+            current_button.config(highlightbackground='red')
 
     for row_index, row in enumerate(keyboard_layout):
         row_frame = tk.Frame(keyboard_frame)
-        row_frame.grid(row=row_index, column=0)
+        row_frame.pack()
         for col_index, key in enumerate(row):
             button = tk.Button(row_frame, text=key, width=7, height=3, command=lambda k=key: key_board_press(k))
             root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
-
-
-            button.grid(row=0, column=col_index, pady=1, padx=1)
+            button.pack(side='left', pady=1, padx=1)
             my_buttons[key] = button
-
-
