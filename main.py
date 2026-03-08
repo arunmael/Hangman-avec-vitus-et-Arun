@@ -1,18 +1,17 @@
 import tkinter as tk
-import design
+import start_screen
 import logic
 
 def main():
     root = tk.Tk()
     root.title("Hangman")
-    root.geometry("700x700")
+    root.geometry("1200x700")
     root.configure(bg="#41423d")
 
 
     word = logic.random_word()
     print(f"Gesuchtes Wort: {word}")
-    design.key_board(word, root)
-    design.draw_hangman(root)
+    start_screen.start_screen(root)
     root.mainloop()
 
 

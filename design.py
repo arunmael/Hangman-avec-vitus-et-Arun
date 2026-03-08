@@ -47,7 +47,7 @@ def draw_hangman(root):
 
 def key_board(root, random_word):
     keyboard_frame = tk.Frame(root)
-    keyboard_frame.pack(pady=(20, 90), padx=10, side='bottom')
+    keyboard_frame.grid(row=2, column=0, pady=(20, 90), padx=10, sticky="s")
     my_buttons = {}
     keyboard_layout = [['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü'],
                        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
@@ -60,15 +60,16 @@ def key_board(root, random_word):
 
         word_split = list(word_lowercase)
         if key in word_split:
-            current_button.config(highlightbackground='green')
+            current_button.config(highlightbackground='green', bg='green')
         else:
-            current_button.config(highlightbackground='red')
+            current_button.config(highlightbackground='red', bg='red')
 
     for row_index, row in enumerate(keyboard_layout):
         row_frame = tk.Frame(keyboard_frame)
-        row_frame.pack()
+        row_frame.grid(row=row_index, column=0)
         for col_index, key in enumerate(row):
             button = tk.Button(row_frame, text=key, width=7, height=3, command=lambda k=key: key_board_press(k))
-            root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
-            button.pack(side='left', pady=1, padx=1)
+            button.grid(row=0, column=col_index, pady=1, padx=1)
             my_buttons[key] = button
+
+    root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
