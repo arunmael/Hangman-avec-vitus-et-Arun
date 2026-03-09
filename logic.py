@@ -108,7 +108,7 @@ def celebrities_word():
         "Paris Hilton", "Lindsay Lohan", "Britney Spears", "Lady Gaga", "Katy Perry",
         "Nick Jonas", "Priyanka Chopra", "Deepika Padukone", "Shah Rukh Khan", "Ranveer Singh",
         "BamBam", "Lisa", "Jennie", "Rosé", "Jisoo", "Sophie Rain", "Lily Phillip",
-        "Rizzler", "Johnny Sins", "Vitus", "Arun"
+        "Rizzler", "Johnny Sins", "Vitus", "Arun", "Riccardo"
     ]
     random_celebritie = random.choice(celebrities)
     return random_celebritie
