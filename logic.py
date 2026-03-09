@@ -3,7 +3,7 @@ This is the File for the logic of the programm
 """
 from wonderwords import RandomWord
 import random
-
+mode = 'classic'
 def random_word():
     """
     This is to choose a random word from the English dictionary

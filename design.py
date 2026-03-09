@@ -2,6 +2,7 @@
 This File is for the designing of the game
 """
 import tkinter as tk
+import logic
 from PIL import Image, ImageTk
 
 
@@ -45,7 +46,7 @@ def draw_hangman(root):
     forward_btn.grid(row=1, column=1)
 
 
-def key_board(root, random_word):
+def key_board(root, random_word, random_celebritie):
     keyboard_frame = tk.Frame(root)
     keyboard_frame.grid(row=2, column=0, pady=(20, 90), padx=10, sticky="s")
     my_buttons = {}
@@ -56,8 +57,10 @@ def key_board(root, random_word):
 
     def key_board_press(key):
         current_button = my_buttons[key]
-        word_lowercase = random_word.lower()
-
+        if logic.mode == 'classic':
+            word_lowercase = random_word.lower()
+        if logic.mode == 'celb':
+            word_lowercase = random_celebritie.lower()
         word_split = list(word_lowercase)
         if key in word_split:
             current_button.config(highlightbackground='green', bg='green')
