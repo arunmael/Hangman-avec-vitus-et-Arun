@@ -23,6 +23,7 @@ def start_screen(root):
     def celebrities_button_action(event=None):
         welcome_label.place_forget()
         celebrities_button.place_forget()
+        classic_button.place_forget()
         design.draw_hangman(root)
         design.key_board(root, word)
         celb_label = tk.Label(root, text='Celebrity', font=('Arial', 30))
