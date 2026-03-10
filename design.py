@@ -57,6 +57,7 @@ def key_board(root, random_word, random_celebritie):
 
     def key_board_press(key):
         current_button = my_buttons[key]
+        word_lowercase = random_word.lower()
         if logic.mode == 'classic':
             word_lowercase = random_word.lower()
         if logic.mode == 'celb':
@@ -66,6 +67,8 @@ def key_board(root, random_word, random_celebritie):
             current_button.config(highlightbackground='green', bg='green')
         else:
             current_button.config(highlightbackground='red', bg='red')
+        logic.check_for_input(key, word_split)
+        lines(word_split, key)
 
     for row_index, row in enumerate(keyboard_layout):
         row_frame = tk.Frame(keyboard_frame)
@@ -76,3 +79,26 @@ def key_board(root, random_word, random_celebritie):
             my_buttons[key] = button
 
     root.bind("<Key>", lambda e: key_board_press(e.char.lower()))
+
+    line = ["_"]
+    word_length = len(random_word)
+    line_amount = line * word_length
+    word_var = tk.StringVar(value=" ".join(line_amount))
+
+    def lines(correct_word, key_pressed):
+        line_frame = tk.Frame(root)
+        line_frame.grid(row=1, column=0)
+
+        label = tk.Label(line_frame, textvariable=word_var, font=("Arial", 40))
+        label.grid(row=2, column=0)
+
+        def refresh():
+            word_var.set(" ".join(line_amount))
+
+        for i, char in enumerate(correct_word):
+            if key_pressed == char:
+                line_amount[i] = char
+            refresh()
+
+            print(correct_word)
+
